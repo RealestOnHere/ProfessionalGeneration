@@ -8,7 +8,7 @@
 
 local cams = workspace.CurrentCamera.ViewportSize
 local gradient = http_request({Url = "https://github.com/GFXTI/ProfessionalGeneration/blob/main/LibraryImages/angryimg.png?raw=true"}).Body
-local colorpgradient = http_request({Url = "https://github.com/GFXTI/ProfessionalGeneration/blob/main/LibraryImages/overlay3.png?raw=true"}).Body
+local colorpgradient = http_request({Url = "https://github.com/RealestOnHere/ProfessionalGeneration/blob/main/overlay3.png?raw=true"}).Body
 local huegradient = http_request({Url = "https://github.com/GFXTI/ProfessionalGeneration/blob/main/LibraryImages/hue.png?raw=true"}).Body
 local startpos = (cams / 2) - Vector2.new(300, 200)
 local lib = {
@@ -143,48 +143,52 @@ local Draw, funcs do
     end
 
     do
-        local dcon
-        local offset = Vector2.zero
+    local dcon
+    local offset = Vector2.zero
 
-        table.insert(cons, sv.UserInputService.InputBegan:Connect(function(input, _)
-            if _ or input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
-            local mpos = sv.UserInputService:GetMouseLocation()
+    table.insert(cons, sv.UserInputService.InputBegan:Connect(function(input, _)
+        if _ or input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
+        local mpos = sv.UserInputService:GetMouseLocation()
 
-            for i,v in next, drag do
-                if v.Visible and funcs.isinframe(v.obj, mpos) and (function()
-                    for i2,v2 in next, v:children(true) do
-                        if v2:isa "Square" and not v2.Filled then continue end
-                        if v2.Visible and v2.Transparency ~= 0 and funcs.isinframe(v2.obj, mpos) then return end
-                    end
+        for i,v in next, drag do
+            if v.Visible and funcs.isinframe(v.obj, mpos) and (function()
+                for i2,v2 in next, v:children(true) do
+                    if v2:isa "Square" and not v2.Filled then continue end
+                    if v2.Visible and v2.Transparency ~= 0 and funcs.isinframe(v2.obj, mpos) then return end
+                end
 
-                    return true
-                end)() then
-                    offset = mpos - v.Position
-                    local offsets = {}
+                return true
+            end)() then
+                offset = mpos - v.Position
+                local offsets = {}
+
+                for _,v2 in next, v:children(true) do
+                    offsets[_] = mpos - v2.Position
+                end
+
+                dcon = sv.RunService.RenderStepped:Connect(function()
+                    v.Position = sv.UserInputService:GetMouseLocation() - offset
 
                     for _,v2 in next, v:children(true) do
-                        offsets[_] = mpos - v2.Position
+                        v2.Position = sv.UserInputService:GetMouseLocation() - offsets[_]
                     end
+                end)
 
-                    dcon = sv.RunService.RenderStepped:Connect(function()
-                        v.Position = sv.UserInputService:GetMouseLocation() - offset
-
-                        for _,v2 in next, v:children(true) do
-                            v2.Position = sv.UserInputService:GetMouseLocation() - offsets[_]
-                        end
-                    end)
-
-                    table.insert(cons, dcon)
-                end
+                table.insert(cons, dcon)
             end
-        end))
-		
-		table.insert(cons, sv.UserInputService.InputEnded:Connect(function(input)
-			if input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
-					
-			dcon:Disconnect()
-		end))
-    end
+        end
+    end))
+    
+    table.insert(cons, sv.UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
+                
+        -- FIX: Check if dcon exists before disconnecting
+        if dcon then
+            dcon:Disconnect()
+            dcon = nil 
+        end
+    end))
+end
 end
 
 local function Box(frame, z, top)
@@ -871,7 +875,7 @@ function lib:commandbar() -- i dont wanna fuckin make this rn
         cmds = {}
     }
     -- sdata here cuz ik people only gonna use the ui lib
-    local sdata = syn.request({Url = "https://github.com/GFXTI/ProfessionalGeneration/blob/main/LibraryImages/334-3349023_free-white-settings-icon-png-tool-icon-white.png?raw=true"}).Body
+    local sdata = syn.request({Url = "https://github.com/RealestOnHere/ProfessionalGeneration/blob/main/334-3349023_free-white-settings-icon-png-tool-icon-white.png?raw=true"}).Body
 
     local box = GetGradientBox(true)
     local listbb = GetGradientBox(true)
