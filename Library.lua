@@ -7,9 +7,9 @@
 ]==]
 
 local cams = workspace.CurrentCamera.ViewportSize
-local gradient = http_request({Url = "https://github.com/GFXTI/ProfessionalGeneration/blob/main/LibraryImages/angryimg.png?raw=true"}).Body
+local gradient = http_request({Url = "https://github.com/RealestOnHere/ProfessionalGeneration/blob/main/angryimg.png?raw=true"}).Body
 local colorpgradient = http_request({Url = "https://github.com/RealestOnHere/ProfessionalGeneration/blob/main/overlay3.png?raw=true"}).Body
-local huegradient = http_request({Url = "https://github.com/GFXTI/ProfessionalGeneration/blob/main/LibraryImages/hue.png?raw=true"}).Body
+local huegradient = http_request({Url = "https://github.com/RealestOnHere/ProfessionalGeneration/blob/main/hue.png?raw=true"}).Body
 local startpos = (cams / 2) - Vector2.new(300, 200)
 local lib = {
     AccentColor = Color3.new(0.078431, 0.333333, 0.878431)
